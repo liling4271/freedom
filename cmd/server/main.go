@@ -1,7 +1,11 @@
-package server
+package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
+	_ = os.Setenv("DEBUG", "true")
 	fmt.Println("启动！")
 }
