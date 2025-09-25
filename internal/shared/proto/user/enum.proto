@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/liling4271/freedom/internal/shared/proto/user";
+
+// 用户状态
+enum UserStatus {
+    USER_STATUS_UNSPECIFIED = 0;
+    USER_STATUS_ACTIVE = 1;      // 活跃
+    USER_STATUS_INACTIVE = 2;    // 未激活
+    USER_STATUS_BANNED = 3;      // 封禁
+    USER_STATUS_DELETED = 4;     // 已删除
+}
+
+// 登录类型
+enum LoginType {
+    LOGIN_TYPE_UNSPECIFIED = 0;
+    LOGIN_TYPE_USERNAME = 1;     // 用户名登录
+    LOGIN_TYPE_EMAIL = 2;        // 邮箱登录
+    LOGIN_TYPE_PHONE = 3;        // 手机登录
+    LOGIN_TYPE_WEIXIN = 4;       // 微信登录
+}

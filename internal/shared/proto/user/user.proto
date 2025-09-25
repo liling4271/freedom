@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/liling4271/freedom/internal/shared/proto/user";
+
+import "google/api/annotations.proto";
+//import "common/common.proto";
+import "user/message.proto";
+//import "user/enum.proto";
+
+// 用户服务定义
+service UserService {
+    // 认证相关
+    rpc Register(RegisterRequest) returns (RegisterResponse) {
+        option (google.api.http) = {
+            post: "/v1/users/register"
+            body: "*"
+        };
+    }
+}

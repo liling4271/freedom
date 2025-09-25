@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/liling4271/freedom/internal/shared/proto/user";
+
+import "common/common.proto";
+import "user/enum.proto";
+
+// 用户基本信息
+message User {
+    string id = 1;                   // 用户ID
+    string username = 2;             // 用户名
+    UserStatus status = 3;          // 用户状态
+    int64 created_at = 4;           // 创建时间戳
+    int64 updated_at = 5;           // 更新时间戳
+    int64 last_login_at = 6;        // 最后登录时间
+    string last_login_ip = 7;       // 最后登录IP
+}
+
+// 注册请求
+message RegisterRequest {
+    string username = 1;             // 用户名
+    string password = 2;             // 密码
+}
+
+// 注册响应
+message RegisterResponse {
+    common.BaseResponse base = 1;
+    User user = 2;
+    string access_token = 3;         // 访问令牌
+    string refresh_token = 4;        // 刷新令牌
+    int64 expires_at = 5;            // 过期时间
+}
+
+// 登录请求
+message LoginRequest {
+    LoginType login_type = 1;        // 登录类型
+    string identifier = 2;           // 标识符（用户名/邮箱/手机）
+    string password = 3;             // 密码
+    string client_ip = 4;            // 客户端IP
+    string device_info = 5;          // 设备信息
+}
+
+// 登录响应
+message LoginResponse {
+    common.BaseResponse base = 1;
+    User user = 2;
+    string access_token = 3;
+    string refresh_token = 4;
+    int64 expires_at = 5;
+}
