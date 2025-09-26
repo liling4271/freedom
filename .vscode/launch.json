@@ -6,7 +6,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "./cmd/server",
+            "program": "./cmd/user-server/",
             "cwd": "${workspaceFolder}",
             "env": {},
             "args": [],

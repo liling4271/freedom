@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"errors"
-	userpb "freedom/gen/proto/user"
+	userPb "freedom/gen/proto/user"
 	userdb "freedom/internal/user/model"
 	userRepo "freedom/internal/user/repository"
 	"time"
@@ -12,11 +12,22 @@ import (
 )
 
 type UserService struct {
+	// 嵌入未实现的方法
+	userPb.UnimplementedUserServiceServer
 	repo userRepo.UserRepository
 }
 
+// 确保实现了 gRPC 接口
+var _ userPb.UserServiceServer = (*UserService)(nil)
+
+func NewUserService(repo userRepo.UserRepository) *UserService {
+	return &UserService{
+		repo: repo,
+	}
+}
+
 // 新用户注册时，last_login 应该是 NULL（从未登录过）
-func (s *UserService) Register(ctx context.Context, req *userpb.RegisterRequest) (*userpb.RegisterResponse, error) {
+func (s *UserService) Register(ctx context.Context, req *userPb.RegisterRequest) (*userPb.RegisterResponse, error) {
 	if req.Username == "" {
 		return nil, errors.New("账号不能为空")
 	}
@@ -35,12 +46,6 @@ func (s *UserService) Register(ctx context.Context, req *userpb.RegisterRequest)
 	if err := s.repo.Create(ctx, user); err != nil {
 		return nil, err
 	}
-	res := &userpb.RegisterResponse{}
+	res := &userPb.RegisterResponse{}
 	return res, nil
-}
-
-func NewUserService(repo userRepo.UserRepository) *UserService {
-	return &UserService{
-		repo: repo,
-	}
 }
